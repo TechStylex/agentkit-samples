@@ -1,5 +1,6 @@
 import os
 import json
+from typing import Optional
 
 from rich.console import Console
 import pandas as pd
@@ -11,12 +12,9 @@ from .lancedb_manager import lancedb_manager
 # Import utility functions
 from .utils import get_multimodal_text_vector as _get_text_vector
 
-def lancedb_hybrid_execution(sql_query: str, user_question: str = "") -> str:
-    console.print(f"[lancedb_hybrid_execution] Inputs: sql_query={sql_query!r}, user_question={user_question!r}")
-    try:
-        params = json.loads(sql_query)
-    except Exception:
-        return json.dumps({"error": "Invalid query format: expected JSON"}, ensure_ascii=False)
+
+def lancedb_hybrid_execution(query_text: str, filters: str = "", select: Optional[list] = None, limit: int = 10) -> str:
+    console.print(f"[lancedb_hybrid_execution] Inputs: query_text={query_text!r}, filters={filters!r}")
 
     # open table
     tbl, err = lancedb_manager.open_table()
@@ -24,11 +22,9 @@ def lancedb_hybrid_execution(sql_query: str, user_question: str = "") -> str:
         return json.dumps({"error": err}, ensure_ascii=False)
 
     # parse params
-    query_text = params.get("query_text") or ""
     vector_col = "poster_embedding"
-    limit = 1000
-    select = params.get("select") or ["Series_Title", "poster_precision_link"]
-    filters = params.get("filters") or ""
+    if select is None:
+        select = ["Series_Title", "poster_precision_link"]
 
     # embed
     vec, v_err = _get_text_vector(query_text)

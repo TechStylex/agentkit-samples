@@ -51,11 +51,13 @@ SYSTEM_PROMPT = '''
 - **何时使用**：
     1.  当用户描述画面的**视觉特征**时。
     2.  当用户描述**抽象概念**或**剧情氛围**，且无法通过简单的 Genre 字段过滤时。
-- **Filters 语法**：
-    - 仅接受 SQL `WHERE` 子句格式。
-    - 字符串必须用单引号。
-    - `released_year` 必须用单引号。
-    - 示例：`"director = 'Ang Lee' AND released_year > '2000'"`
+- **参数说明**：
+    - `query_text`: 搜索文本描述（必填），如海报视觉特征或语义概念
+    - `filters`: SQL WHERE 子句格式的过滤条件（可选），如 `"director LIKE '%Nolan%' AND imdb_rating > 7.0"`
+    - `select`: 要返回的字段列表（可选），默认 `["Series_Title", "poster_precision_link"]`
+    - `limit`: 返回结果数量（可选），默认 10
+- **调用示例**：
+    `lancedb_hybrid_execution(query_text="poster with animals", filters="director LIKE '%Ang Lee%' AND imdb_rating > 7.0", select=["series_title", "poster_precision_link"], limit=10)`
 
 #### 3. [video_generate] (视频生成)
 - **定义**：基于 Prompt 或图片生成视频。
@@ -80,7 +82,7 @@ SYSTEM_PROMPT = '''
 #### Q3: Ang Lee 评分超过 7 分的电影中，有哪个电影海报中含有动物？ (混合检索)
 **User:** "Ang Lee 评分超过 7 分的电影中，有哪个电影海报中含有动物？"
 **Thought:** 用户查询包含对电影海报内容的视觉描述（“含有动物”），需进行语义/视觉搜索，同时包含元数据过滤（导演和评分）。
-**Action:** `lancedb_hybrid_execution({"query_text": "poster with animals", "filters": "director LIKE '%Ang Lee%' AND imdb_rating > 7.0", "select": ["series_title", "poster_precision_link"], "limit": 10})`
+**Action:** `lancedb_hybrid_execution(query_text="poster with animals", filters="director LIKE '%Ang Lee%' AND imdb_rating > 7.0", select=["series_title", "poster_precision_link"], limit=10)`
 
 #### Q4: 把《Life of Pi》的电影海报，变成视频 (已知实体 -> 视频)
 **User:** "把《Life of Pi》的电影海报，变成视频"
@@ -99,7 +101,7 @@ SYSTEM_PROMPT = '''
 1. 用户未指定电影名，而是描述画面内容（“红色跑车”）。
 2. 这是**视觉检索**任务，必须使用 LanceDB 查找符合描述的海报。
 3. 获取检索结果后，调用视频生成工具。
-**Action:** `lancedb_hybrid_execution({"query_text": "poster with a red sports car", "select": ["series_title", "poster_precision_link"], "limit": 1})`
+**Action:** `lancedb_hybrid_execution(query_text="poster with a red sports car", select=["series_title", "poster_precision_link"], limit=1)`
 **Observation:** `[{"series_title": "Ford v Ferrari", "poster_precision_link": "https://.../fvf.jpg"}]`
 **Thought:** 已找到符合描述的电影《Ford v Ferrari》，现在生成视频。
 **Action:** `video_generate(params=[{"video_name": "car_movie.mp4", "first_frame": "https://.../fvf.jpg", "prompt": "红色跑车在赛道上飞驰，引擎轰鸣，速度感。"}], batch_size=1)`
