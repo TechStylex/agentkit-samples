@@ -17,6 +17,11 @@ load_dotenv(
 from veadk import Agent, Runner  # noqa: E402
 from veadk.auth.veauth.ark_veauth import get_ark_token  # noqa: E402
 from veadk.memory.short_term_memory import ShortTermMemory  # noqa: E402
+
+# Check if MODEL_AGENT_API_KEY environment variable exists and is not empty
+if "MODEL_AGENT_API_KEY" not in os.environ or not os.environ["MODEL_AGENT_API_KEY"]:
+    os.environ["MODEL_AGENT_API_KEY"] = get_ark_token()
+
 from veadk.tools.builtin_tools.video_generate import video_generate  # noqa: E402
 from agentkit.apps import AgentkitAgentServerApp  # noqa: E402
 
@@ -26,11 +31,6 @@ from tools.duckdb_sql_execution import duckdb_sql_execution  # noqa: E402
 from tools.lancedb_hybrid_execution import lancedb_hybrid_execution  # noqa: E402
 from prompts import SYSTEM_PROMPT  # noqa: E402
 
-# Check if MODEL_AGENT_API_KEY environment variable exists and is not empty
-if "MODEL_AGENT_API_KEY" not in os.environ or not os.environ["MODEL_AGENT_API_KEY"]:
-    os.environ["MODEL_AGENT_API_KEY"] = get_ark_token()
-# Optionally assign to a variable for easier use in the file
-MODEL_AGENT_API_KEY = os.environ["MODEL_AGENT_API_KEY"]
 
 short_term_memory = ShortTermMemory(backend="local")
 
@@ -55,7 +55,7 @@ model_name = os.getenv(
     "MODEL_AGENT_NAME", "doubao-seed-1-6-251015"
 )  # 默认使用更主流的豆包模型
 root_agent = Agent(
-    description="基于LanceDB的数据检索Agent，支持结构化和向量查询。典型问题包括：1.你有哪些数据？2.给我一些样例数据？3.Ang Lee 评分超过7分的有哪些电影？4.Ang Lee 评分超过7分的电影中，有哪个电影海报中含有动物？5.Life of Pi 的电影海报，变成视频",
+    description="基于LanceDB的数据检索Agent，支持结构化和向量查询。典型问题包括：1.你有哪些数据？2.给我一些样例数据？3.Ang Lee 评分超过7分的有哪些电影？4.Ang Lee 评分超过7分的电影中，有哪个电影海报中含有动物？5.Life of Pi 的电影海报，变成视频。 返回显示电影海报为![老虎](https://example.com/image1.png), 返回视频并显示成<video src='https://example.com/video1.mp4' width='640' controls>分镜视频1</video>",
     instruction=SYSTEM_PROMPT,
     model_name=model_name,
     tools=tools,

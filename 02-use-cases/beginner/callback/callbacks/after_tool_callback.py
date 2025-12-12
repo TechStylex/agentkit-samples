@@ -76,6 +76,8 @@ def filter_pii(
             return f"[{pii_type}已隐藏]"
 
         # 执行替换
-        filtered_text = pattern.sub(replace_and_log, filtered_text)
+        filtered_text = pattern.sub(
+            replace_and_log, str(filtered_text) if filtered_text is not None else ""
+        )
 
     return filtered_text
