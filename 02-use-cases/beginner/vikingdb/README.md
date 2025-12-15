@@ -116,13 +116,7 @@ brew install uv
 cd 02-use-cases/beginner/vikingdb
 ```
 
-您可以通过 `pip` 工具来安装本项目依赖：
-
-```bash
-pip install -r requirements.txt
-```
-
-或者使用 `uv` 工具来安装本项目依赖：
+使用 `uv` 工具来安装本项目依赖：
 
 ```bash
 # 如果没有 `uv` 虚拟环境，可以使用命令先创建一个虚拟环境
@@ -130,9 +124,6 @@ uv venv --python 3.12
 
 # 使用 `pyproject.toml` 管理依赖
 uv sync
-
-# 使用 `requirements.txt` 管理依赖
-uv pip install -r requirements.txt
 
 # 激活虚拟环境
 source .venv/bin/activate
@@ -147,6 +138,8 @@ export MODEL_AGENT_NAME=doubao-seed-1-6-251015
 # 火山引擎访问凭证（必需）
 export VOLCENGINE_ACCESS_KEY=<Your Access Key>
 export VOLCENGINE_SECRET_KEY=<Your Secret Key>
+# bucket需要用来上传本地文件，进而将文件从tos导入到知识库中
+export DATABASE_TOS_BUCKET=agentkit-platform-{{your_account_id}} 
 ```
 
 ### 调试方法
@@ -203,7 +196,7 @@ uv run agent.py
 ### AgentKit 云上部署
 
 ```bash
-cd vikingdb
+# 进入到vikingdb目录
 
 # 配置部署参数
 agentkit config

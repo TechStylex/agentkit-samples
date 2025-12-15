@@ -9,4 +9,5 @@ dependencies = [
     "veadk-python[extensions]==0.2.29",
     "veadk-python==0.2.29",
     "agentkit-sdk-python==0.1.15",
+    "python-dotenv>=1.0.0",
 ]

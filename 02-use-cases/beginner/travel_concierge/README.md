@@ -111,13 +111,7 @@ brew install uv
 cd 02-use-cases/beginner/travel_concierge
 ```
 
-您可以通过 `pip` 工具来安装本项目依赖：
-
-```bash
-pip install -r requirements.txt
-```
-
-或者使用 `uv` 工具来安装本项目依赖：
+使用 `uv` 工具来安装本项目依赖：
 
 ```bash
 # 如果没有 `uv` 虚拟环境，可以使用命令先创建一个虚拟环境
@@ -125,9 +119,6 @@ uv venv --python 3.12
 
 # 使用 `pyproject.toml` 管理依赖
 uv sync
-
-# 使用 `requirements.txt` 管理依赖
-uv pip install -r requirements.txt
 
 # 激活虚拟环境
 source .venv/bin/activate
@@ -154,7 +145,6 @@ uv run agent.py
 # 服务将监听 http://0.0.0.0:8000
 
 # 新开终端，运行测试客户端
-# 需要编辑 client.py，将其中的第 14 行和第 15 行的 base_url 和 api_key 修改为 agentkit.yaml 中生成的 runtime_endpoint 和 runtime_apikey 字段
 uv run client.py
 ```
 
@@ -210,11 +200,9 @@ agentkit config
 agentkit launch
 
 # 测试部署的 Agent
-agentkit invoke 'What is my habby?'
+agentkit invoke '我想在杭州进行一次为期3天的旅行，喜欢自然风光和历史文化，预算中等?'
 
 # 或使用 client.py 连接云端服务
-# 需要编辑 client.py，将其中的第 14 行和第 15 行的 base_url 和 api_key 修改为 agentkit.yaml 中生成的 runtime_endpoint 和 runtime_apikey 字段
-# 按需修改 client.py，第 56 行，请求的内容
 uv run client.py
 ```
 

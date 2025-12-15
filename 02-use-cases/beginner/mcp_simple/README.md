@@ -118,13 +118,7 @@ brew install uv
 cd 02-use-cases/beginner/mcp_simple
 ```
 
-您可以通过 `pip` 工具来安装本项目依赖：
-
-```bash
-pip install -r requirements.txt
-```
-
-或者使用 `uv` 工具来安装本项目依赖：
+使用 `uv` 工具来安装本项目依赖：
 
 ```bash
 # 如果没有 `uv` 虚拟环境，可以使用命令先创建一个虚拟环境
@@ -132,9 +126,6 @@ uv venv --python 3.12
 
 # 使用 `pyproject.toml` 管理依赖
 uv sync
-
-# 使用 `requirements.txt` 管理依赖
-uv pip install -r requirements.txt
 
 # 激活虚拟环境
 source .venv/bin/activate

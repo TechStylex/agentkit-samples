@@ -53,6 +53,6 @@ if __name__ == "__main__":
                 print(line)
 
     async def send_request_parallel():
-        await send_request("帮我指定一个杭州三日游")
+        await send_request("帮我制定一个杭州三日游")
 
     asyncio.run(send_request_parallel())
