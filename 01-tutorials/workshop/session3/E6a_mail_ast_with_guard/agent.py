@@ -61,7 +61,7 @@ class BeforeModelPermissionCallback:
 
             headers = {
                 "Authorization": f"Bearer {self.api_key}",
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             }
 
             resp = requests.post(
@@ -198,10 +198,10 @@ adaptive_permission_api_key = os.getenv("ADAPTIVE_PERMISSION_SERVICE_KEY")
 
 if adaptive_permission_api_key:
     logger.info("权限围栏已开启")
-    agent.before_model_callback=BeforeModelPermissionCallback(
+    agent.before_model_callback = BeforeModelPermissionCallback(
         adaptive_permission_service_url, adaptive_permission_api_key
     )
-    agent.after_model_callback=AfterModelPermissionCallback(
+    agent.after_model_callback = AfterModelPermissionCallback(
         adaptive_permission_service_url, adaptive_permission_api_key
     )
 else:
