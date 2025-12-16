@@ -2,6 +2,7 @@ from datetime import datetime
 import json
 import os
 
+
 # Mock数据结构
 class Email:
     def __init__(
@@ -11,7 +12,7 @@ class Email:
         subject: str,
         body: str,
         received_date: str,
-        priority: str = "normal"
+        priority: str = "normal",
     ):
         self.id = id
         self.sender = sender
@@ -30,6 +31,7 @@ class Email:
             "priority": self.priority,
         }
 
+
 # 从JSON文件加载邮件数据
 # 获取当前文件的目录
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -38,6 +40,7 @@ email_file_path = os.path.join(current_dir, "emails.json")
 
 with open(email_file_path, "r", encoding="utf-8") as f:
     email_data = json.load(f)
+
 
 def read_inbox(mailbox: str, unread_only: bool):
     """
@@ -50,11 +53,8 @@ def read_inbox(mailbox: str, unread_only: bool):
     owner_emails = [Email(**email) for email in email_data.get(mailbox, [])]
 
     emails = [
-        {
-            "id": email.id,
-            "sender": email.sender,
-            "subject": email.subject
-        } for email in owner_emails
+        {"id": email.id, "sender": email.sender, "subject": email.subject}
+        for email in owner_emails
     ]
 
     result = {
@@ -65,6 +65,7 @@ def read_inbox(mailbox: str, unread_only: bool):
     }
 
     return result
+
 
 def read_email(mailbox: str, email_id: str):
     """
@@ -85,6 +86,7 @@ def read_email(mailbox: str, email_id: str):
     else:
         raise Exception("invali email_id")
 
+
 def classify_email(email_text: str, keywords: str):
     """
     根据指定的关键对单封邮件进行分类
@@ -100,6 +102,7 @@ def classify_email(email_text: str, keywords: str):
     }
 
     return result
+
 
 def forward_email(mailbox: str, email_id: str, recipient: str):
     """
@@ -121,11 +124,12 @@ def forward_email(mailbox: str, email_id: str, recipient: str):
         "forwarded_email": {
             "email_id": email_id,
             "forwarded_to": recipient,
-            "timestamp": datetime.now().isoformat()
+            "timestamp": datetime.now().isoformat(),
         },
-        "message": f"成功转发邮件 {email_id} 到 {recipient}"
+        "message": f"成功转发邮件 {email_id} 到 {recipient}",
     }
     return result
+
 
 def generate_report(total: int, forwarded: int, receipient: str):
     """
@@ -158,10 +162,11 @@ def generate_report(total: int, forwarded: int, receipient: str):
             "forwarded_count": forwarded,
             "target_email": receipient,
             "execution_success": success,
-        }
+        },
     }
 
     return result
+
 
 class Colors:
     HEADER = "\033[37m"

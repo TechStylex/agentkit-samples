@@ -9,10 +9,12 @@ class Colors:
     BOLD = "\033[1m"
     UNDERLINE = "\033[4m"
 
+
 def print_agent_reflect(text: str):
     """打印智能体反思"""
     print(f"\n{Colors.CYAN}{Colors.BOLD}[智能体反思]{Colors.ENDC}")
     print(f"{Colors.CYAN}{text}{Colors.ENDC}")
+
 
 def print_agent_act(texts: list):
     """打印智能体行动"""
@@ -20,11 +22,13 @@ def print_agent_act(texts: list):
     for text in texts:
         print(f"{Colors.YELLOW}{text}{Colors.ENDC}")
 
+
 def print_agent_permission(texts: list):
     """打印智能体权限"""
     print(f"\n{Colors.RED}{Colors.BOLD}[智能体权限]{Colors.ENDC}")
     for text in texts:
         print(f"{Colors.RED}{text}{Colors.ENDC}")
+
 
 def print_header(text: str):
     """打印标题"""
@@ -32,11 +36,13 @@ def print_header(text: str):
     print(f"{Colors.HEADER}{Colors.BOLD}{text.center(60)}{Colors.ENDC}")
     print(f"{Colors.HEADER}{Colors.BOLD}{'=' * 60}{Colors.ENDC}\n")
 
+
 def print_user_request(texts: list):
     """打印用户请求"""
     print(f"\n{Colors.GREEN}{Colors.BOLD}[User]{Colors.ENDC}")
     for text in texts:
         print(f"{Colors.GREEN}{text}{Colors.ENDC}")
+
 
 def print_agent_respond(texts: list):
     """打印智能体响应"""
