@@ -1,0 +1,14 @@
+--- a/veadk/runner.py
++++ b/veadk/runner.py
+@@ -137,6 +137,12 @@ def intercept_new_message(process_func):
+             ):
+                 yield event
++                
++                # Skip None events to prevent AttributeError
++                if event is None:
++                    logger.warning("Received None event from generator, skipping...")
++                    continue
++
+                 event_metadata = f"| agent_name: {event.author} , user_id: {user_id} , session_id: {session_id} , invocation_id: {event.invocation_id}"
+                 if event.get_function_calls():
+                     for function_call in event.get_function_calls():
