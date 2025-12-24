@@ -145,7 +145,6 @@ def upload_file_to_tos(
 
         signed_url = signed_url_output.signed_url
         logger.info(f"Signed URL generated successfully (valid for {expires} seconds)")
-        logger.error(f"Access URL: {signed_url}")
 
         return signed_url
 

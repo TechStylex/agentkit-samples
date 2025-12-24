@@ -123,7 +123,7 @@ cd 02-use-cases/beginner/vikingdb
 uv venv --python 3.12
 
 # 使用 `pyproject.toml` 管理依赖
-uv sync
+uv sync --index-url https://pypi.tuna.tsinghua.edu.cn/simple
 
 # 激活虚拟环境
 source .venv/bin/activate
@@ -201,6 +201,7 @@ agentkit config \
 --agent_name vikingdb_agnet \
 --entry_point 'agent.py' \
 --runtime_envs DATABASE_TOS_BUCKET=agentkit-platform-2107625663 \
+--runtime_envs DATABASE_VIKING_COLLECTION=agentkit_knowledge_app \
 --launch_type cloud
 
 # 启动云端服务

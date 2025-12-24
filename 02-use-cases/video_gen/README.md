@@ -39,24 +39,20 @@ AgentKit 运行时
 主要特性包括：
 
 - **智能分镜生成**：自动将叙事分解为 4 个视觉关键帧,保持风格一致性和角色连续性
-
 - **无缝视频过渡**：使用先进的视觉 AI 模型在帧之间生成流畅的过渡视频
-
 - **本地 MCP 工具集成**：利用模型上下文协议进行高效的本地视频处理,无需云端依赖
-
 - **自动上传与分享**：将完成的视频上传到 TOS,并生成限时签名 URL 以安全分享
-
 - **迭代优化**：维护对话上下文,允许用户请求对风格、节奏或内容进行调整
 
 ## Agent 能力
 
-| 组件 | 描述 |
-| - | - |
-| **Agent 服务** | [`agent.py`](agent.py) - 主应用程序,包含 MCP 工具注册 |
+| 组件           | 描述                                                      |
+| -------------- | --------------------------------------------------------- |
+| **Agent 服务** | [`agent.py`](agent.py) - 主应用程序,包含 MCP 工具注册     |
 | **Agent 配置** | [`agent.yaml`](agent.yaml) - 模型设置、系统指令和工具列表 |
-| **自定义工具** | [`tool/`](tool/) - 文件下载和 TOS 上传实用工具 |
-| **MCP 集成** | `@pickstar-2002/video-clip-mcp` - 本地视频拼接服务 |
-| **短期记忆** | 会话上下文维护以保持对话连续性 |
+| **自定义工具** | [`tool/`](tool/) - 文件下载和 TOS 上传实用工具            |
+| **MCP 集成**   | `@pickstar-2002/video-clip-mcp` - 本地视频拼接服务        |
+| **短期记忆**   | 会话上下文维护以保持对话连续性                            |
 
 ## 快速开始
 
@@ -95,7 +91,7 @@ AgentKit 运行时
 
 ### 安装依赖
 
-*推荐使用uv工具build项目**
+\*推荐使用uv工具build项目\*\*
 
 ```bash
 # install uv
@@ -104,7 +100,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 cd 02-use-cases/video_gen
 
 # create virtual environment
-uv sync
+uv sync --index-url https://pypi.tuna.tsinghua.edu.cn/simple
 ```
 
 **注意:** MCP 视频工具 (`@pickstar-2002/video-clip-mcp`) 在智能体运行时会通过 `npx` 自动启动。无需手动安装。
@@ -210,22 +206,41 @@ veadk web
 
 ## AgentKit 部署
 
-部署到火山引擎 AgentKit Runtime:
+### 部署到火山引擎 AgentKit Runtime
+
+步骤1: 进入项目目录
+
+   ```bash
+   cd 02-use-cases/video_gen
+   ```
+
+步骤2: 配置 AgentKit**
 
 ```bash
-# 1. 进入项目目录
-cd 02-use-cases/video_gen
-
-# 2. 配置并部署
 agentkit config \
 --agent_name storybook_illustrator \
 --entry_point 'agent.py' \
 --runtime_envs DATABASE_TOS_BUCKET=agentkit-platform-{{your_account_id}} \
 --launch_type cloud
+```
 
-# 3. 部署到运行时
+修改`agentkit.yaml`部署配置
+
+> 目的：修改后会在镜像build阶段前置安装video-clip-mcp，以加速runtime启动
+
+```bash
+# linux os命令
+sed -i 's/docker_build: {}/docker_build:\n  build_script: "scripts\/setup.sh"/' agentkit.yaml
+
+# mac os命令
+sed -i '' 's/docker_build: {}/docker_build:/' agentkit.yaml && sed -i '' '/docker_build:/a\
+  build_script: "scripts\/setup.sh"' agentkit.yaml
+```
+
+步骤4: 部署到运行时
+
+```bash
 agentkit launch
-
 ```
 
 ### 测试已部署的智能体
@@ -330,7 +345,7 @@ video_gen/
 
 - 确保已安装 Python 3.12+
 - 检查 `.python-version` 文件与您的 Python 安装版本是否匹配
-- 尝试使用 `uv sync --refresh` 重新构建依赖
+- 尝试使用 `uv sync --index-url https://pypi.tuna.tsinghua.edu.cn/simple --refresh` 重新构建依赖
 
 ## 🔗 相关资源
 

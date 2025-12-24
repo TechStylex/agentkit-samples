@@ -12,7 +12,8 @@ __pycache__/
 .python-version
 .veadk-ignore
 .dockerignore
-uv.lock
+config.yaml
+.agentkit/
 
 # Distribution / packaging
 .Python

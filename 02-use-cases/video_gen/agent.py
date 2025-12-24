@@ -48,7 +48,7 @@ server_parameters = StdioServerParameters(
 )
 mcpTool = McpToolset(
     connection_params=StdioConnectionParams(
-        server_params=server_parameters, timeout=60.0
+        server_params=server_parameters, timeout=600.0
     ),
     errlog=None,
 )
