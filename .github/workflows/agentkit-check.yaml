@@ -19,6 +19,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ format('refs/pull/{0}/merge', github.event.inputs.pr_number) }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
