@@ -184,7 +184,7 @@ sequenceDiagram
 cd 01-tutorials/identity/tutorial-2-feishu-idp
 
 # 复制环境变量模板
-cp .env.template .env
+cp .env.example .env
 
 # 编辑 .env 填写配置（与实验1相同）
 ```

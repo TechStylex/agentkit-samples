@@ -249,7 +249,7 @@ RUNTIME_IAM_ROLE_TRN=trn:iam::<account_id>:role/<role_name>
 cd 01-tutorials/identity/tutorial-3-feishu-outbound
 
 # 复制环境变量模板
-cp .env.template .env
+cp .env.example .env
 ```
 
 编辑 `.env` 文件：

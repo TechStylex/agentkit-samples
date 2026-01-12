@@ -56,19 +56,19 @@ identity/
 │   ├── README.md                       # 教程文档
 │   ├── main.py                         # 示例代码
 │   ├── pyproject.toml                  # 依赖配置
-│   ├── .env.template                   # 环境变量模板
+│   ├── .env.example                   # 环境变量模板
 │   └── assets/                         # 截图和流程图
 ├── tutorial-2-feishu-idp/              # 实验2: 飞书 IdP 联合登录
 │   ├── README.md
 │   ├── main.py
 │   ├── pyproject.toml
-│   ├── .env.template
+│   ├── .env.example
 │   └── assets/
 └── tutorial-3-feishu-outbound/         # 实验3: Outbound 凭证托管 (进阶)
     ├── README.md
     ├── main.py
     ├── pyproject.toml
-    ├── .env.template
+    ├── .env.example
     └── assets/
 ```
 
@@ -93,7 +93,7 @@ cd agentkit-samples/01-tutorials/identity
 cd tutorial-1-userpool-inbound  # 或其他实验
 
 # 3. 配置环境变量
-cp .env.template .env
+cp .env.example .env
 # 编辑 .env 填写配置
 
 # 4. 安装依赖

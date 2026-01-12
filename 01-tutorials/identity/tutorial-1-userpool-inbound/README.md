@@ -128,7 +128,7 @@ flowchart TB
 复制环境变量模板并填写：
 
 ```bash
-cp .env.template .env
+cp .env.example .env
 ```
 
 编辑 `.env` 文件：
