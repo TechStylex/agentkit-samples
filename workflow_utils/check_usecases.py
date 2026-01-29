@@ -24,25 +24,23 @@ def main() -> None:
     head_sha = os.environ.get("HEAD_SHA", "")
 
     changed = get_changed_files(base_sha, head_sha)
-    changed_use_cases = [p for p in changed if p.startswith("02-use-cases/")]
+    changed_use_cases = [p for p in changed if p.startswith("python")]
 
     if not changed_use_cases:
-        print("No changes under 02-use-cases, skipping main.py checks.")
+        print("No changes under python, skipping main.py checks.")
         return
 
     candidate_dirs: set[Path] = set()
     for rel_path in changed_use_cases:
         parts = Path(rel_path).parts
-        if len(parts) >= 2 and parts[0] == "02-use-cases" and parts[1] != "beginner":
-            candidate_dirs.add(Path(parts[0]) / parts[1])
-        if len(parts) >= 2 and parts[0] == "python" and parts[1] != "02-use-cases":
-            candidate_dirs.add(Path(parts[0]) / parts[1])
-        if len(parts) >= 3 and parts[0] == "python" and parts[1] == "01-use-cases":
-            candidate_dirs.add(Path(parts[0]) / parts[2] / parts[3])
+        if (
+            len(parts) >= 3
+            and parts[0] == "python"
+            and parts[1] in ["02-use-cases", "01-use-cases"]
+        ):
+            candidate_dirs.add(Path(parts[0]) / parts[1] / parts[2])
     if not candidate_dirs:
-        print(
-            "No top-level 02-use-cases/* directories detected, skipping main.py checks."
-        )
+        print("No top-level python/* directories detected, skipping main.py checks.")
         return
 
     print("Use-case directories to check:")

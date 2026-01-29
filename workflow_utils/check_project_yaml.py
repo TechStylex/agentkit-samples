@@ -164,7 +164,7 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     repo_root = Path(__file__).resolve().parent.parent
-    use_cases_dir = repo_root / "02-use-cases"
+    use_cases_dir = repo_root / "python"
 
     diff_commands = [
         ["git", "diff", "--name-only", "--diff-filter=ACMRT"],

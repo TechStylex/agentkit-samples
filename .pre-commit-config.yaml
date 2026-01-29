@@ -31,5 +31,5 @@ repos:
       language: python
       additional_dependencies:
         - python-frontmatter
-      files: ^02-use-cases/.*/project\.yaml$
+      files: ^python/.*/project\.yaml$
       types_or: [ yaml ]
