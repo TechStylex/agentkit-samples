@@ -133,7 +133,9 @@ uv run ./scripts/call_rds_mysql.py list-subnets --vpc-id vpc-xxx --zone-id cn-be
 
 ## 环境变量配置
 
-使用前需要配置以下环境变量:
+1. 获取火山引擎访问凭证：参考 [用户指南](https://www.volcengine.com/docs/6291/65568?lang=zh) 获取 AK/SK
+
+2. 配置以下环境变量:
 
 ```bash
 export VOLCENGINE_ACCESS_KEY="your-access-key"
