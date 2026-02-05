@@ -1,5 +1,5 @@
 ---
-name: volcengine-rds-mysql-copilot
+name: volcengine-rds-mysql
 description: 使用火山引擎 RDS MySQL MCP Server，帮助用户完成 RDS MySQL 相关的实例管理、数据库操作、账号管理和运维任务，可直接调用 uv run ./scripts/call_rds_mysql.py 脚本获取实时结果。
 metadata: {"clawdbot":{"emoji":"🗄️","homepage":"https://www.volcengine.com/product/rds-mysql","requires":{"bins":["uv"],"env":["VOLCENGINE_ACCESS_KEY","VOLCENGINE_SECRET_KEY"]},"os":["darwin","linux"]},"openclaw":{"emoji":"🗄️","homepage":"https://www.volcengine.com/product/rds-mysql","requires":{"bins":["uv"],"env":["VOLCENGINE_ACCESS_KEY","VOLCENGINE_SECRET_KEY"]},"os":["darwin","linux"]},"moltbot":{"emoji":"🗄️","homepage":"https://www.volcengine.com/product/rds-mysql","requires":{"bins":["uv"],"env":["VOLCENGINE_ACCESS_KEY","VOLCENGINE_SECRET_KEY"]},"os":["darwin","linux"]}}
 ---
@@ -15,6 +15,16 @@ metadata: {"clawdbot":{"emoji":"🗄️","homepage":"https://www.volcengine.com/
 **工作模式**:
 - 使用 `scripts/call_rds_mysql.py` 脚本直接获取 RDS MySQL 的实时响应
 
+**运行方式**:
+脚本支持两种运行方式:
+```bash
+# 方式 1: 使用 uv (推荐，自动管理依赖)
+uv run ./scripts/call_rds_mysql.py [action] [options]
+
+# 方式 2: 使用 python (需要预先安装依赖)
+python ./scripts/call_rds_mysql.py [action] [options]
+```
+
 ## 标准使用流程
 
 1. **确认任务类型与参数**
@@ -25,28 +35,42 @@ metadata: {"clawdbot":{"emoji":"🗄️","homepage":"https://www.volcengine.com/
         - `--instance-id`:实例 ID(部分操作必需)
 
 2. **构造查询并调用脚本**
-   - 示例:
+   - 示例（以下命令可使用 `uv run` 或 `python` 运行）:
      ```bash
      # 查询实例列表
      uv run ./scripts/call_rds_mysql.py list-instances
+     # 或
+     python ./scripts/call_rds_mysql.py list-instances
 
      # 查询指定实例详情
      uv run ./scripts/call_rds_mysql.py describe-instance --instance-id mysql-xxx
+     # 或
+     python ./scripts/call_rds_mysql.py describe-instance --instance-id mysql-xxx
 
      # 查询实例的数据库列表
      uv run ./scripts/call_rds_mysql.py list-databases --instance-id mysql-xxx
+     # 或
+     python ./scripts/call_rds_mysql.py list-databases --instance-id mysql-xxx
 
      # 查询实例的账号列表
      uv run ./scripts/call_rds_mysql.py list-accounts --instance-id mysql-xxx
+     # 或
+     python ./scripts/call_rds_mysql.py list-accounts --instance-id mysql-xxx
 
      # 查询实例参数
      uv run ./scripts/call_rds_mysql.py list-parameters --instance-id mysql-xxx
+     # 或
+     python ./scripts/call_rds_mysql.py list-parameters --instance-id mysql-xxx
 
      # 查询 VPC 列表（用于创建实例）
      uv run ./scripts/call_rds_mysql.py list-vpcs
+     # 或
+     python ./scripts/call_rds_mysql.py list-vpcs
 
      # 查询子网列表
      uv run ./scripts/call_rds_mysql.py list-subnets --vpc-id vpc-xxx --zone-id cn-beijing-a
+     # 或
+     python ./scripts/call_rds_mysql.py list-subnets --vpc-id vpc-xxx --zone-id cn-beijing-a
      ```
 
 3. **解析结果并后续处理**
