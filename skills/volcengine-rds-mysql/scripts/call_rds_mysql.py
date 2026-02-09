@@ -10,6 +10,7 @@
 火山引擎 RDS MySQL 运维助手调用脚本
 用于接收用户命令并调用火山引擎 RDS MySQL API，返回结果
 """
+
 import os
 import sys
 import argparse
@@ -27,7 +28,7 @@ try:
     )
 except ImportError as e:
     print(
-        f"错误: 缺少必要的依赖包。请先安装: pip install 'volcengine-python-sdk[rdsmysqlv2,vpc]'",
+        "错误: 缺少必要的依赖包。请先安装: pip install 'volcengine-python-sdk[rdsmysqlv2,vpc]'",
         file=sys.stderr,
     )
     print(f"详细错误: {e}", file=sys.stderr)
@@ -220,9 +221,7 @@ class RDSMySQLClient:
         )
         return self._to_dict(resp)
 
-    def list_vpcs(
-        self, page_number: int = 1, page_size: int = 10
-    ) -> Dict[str, Any]:
+    def list_vpcs(self, page_number: int = 1, page_size: int = 10) -> Dict[str, Any]:
         """查询 VPC 列表"""
         resp = self.vpc_client.describe_vpcs(
             DescribeVpcsRequest(page_number=page_number, page_size=page_size)
@@ -438,9 +437,7 @@ def main():
         default=os.getenv("VOLCENGINE_REGION", "cn-beijing"),
         help="火山引擎地域 ID（默认: cn-beijing）",
     )
-    parser.add_argument(
-        "--endpoint", dest="endpoint", help="API 端点（可选）"
-    )
+    parser.add_argument("--endpoint", dest="endpoint", help="API 端点（可选）")
     parser.add_argument(
         "--page-number",
         dest="page_number",
